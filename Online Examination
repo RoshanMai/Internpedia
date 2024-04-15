@@ -1,0 +1,68 @@
+import java.util.Scanner;
+
+class Question {
+    String question;
+    String[] options;
+    int correctOption;
+
+    public Question(String question, String[] options, int correctOption) {
+        this.question = question;
+        this.options = options;
+        this.correctOption = correctOption;
+    }
+
+    public void displayQuestion() {
+        System.out.println(question);
+        for (int i = 0; i < options.length; i++) {
+            System.out.println((i + 1) + ". " + options[i]);
+        }
+    }
+
+    public boolean isCorrect(int userChoice) {
+        return userChoice == correctOption;
+    }
+}
+
+class Exam {
+    Question[] questions;
+    int score;
+
+    public Exam(Question[] questions) {
+        this.questions = questions;
+    }
+
+    public void startExam() {
+        Scanner scanner = new Scanner(System.in);
+        score = 0;
+
+        for (int i = 0; i < questions.length; i++) {
+            System.out.println("Question " + (i + 1) + ":");
+            questions[i].displayQuestion();
+            System.out.print("Answer: ");
+            int userChoice = scanner.nextInt();
+            if (questions[i].isCorrect(userChoice)) {
+                score++;
+            }
+        }
+
+        System.out.println("Exam completed. Your score: " + score + "/" + questions.length);
+    }
+}
+
+public class OnlineExam {
+    public static void main(String[] args) {
+        // Sample questions
+        Question[] questions = {
+            new Question("A body at rest can have?", new String[]{"Speed", "Velocity", "Momentum", "Energy"}, 2),
+            new Question("What is 2 + 2 * 2?", new String[]{"3", "8", "5", "6"}, 2),
+            new Question("What is the capital of Andrapradesh?", new String[]{"Amaravathi", "Tirupathi", "Vizag", "No of the above"}, 4),
+            new Question("Find the area of a triangle whose sides measure 13 cm, 14 cm and 15 cm ?", new String[]{"84", "64", "44", "22"}, 1),
+            new Question("Which element in the periodic table forms maximum number of compounds ?", new String[]{"H", "O", "S", "C"}, 4),
+            
+            // Add more questions here
+        };
+
+        Exam exam = new Exam(questions);
+        exam.startExam();
+    }
+}
